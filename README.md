@@ -2,7 +2,7 @@
 
 Клон классический игры Арканоид версии 1986, реализованная на HTML5, CSS3 и JavaScript.
 
-![Скриншот игры](assets/sprites/title.png)
+![Скриншот игры](assets/sprites/titlecard.png)
 
 
 ## Запуск
