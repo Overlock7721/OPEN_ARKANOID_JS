@@ -1,0 +1,505 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+#gameContainer {
+    position: relative;
+    width: 720px;
+    height: 560px;
+}
+
+#gameCanvas {
+    background: #000;
+    display: block;
+    image-rendering: pixelated;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background: #000;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#mainMenu {
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/sprites/title.png') no-repeat center center;
+    background-size: contain;
+    opacity: 0.7;
+}
+
+.menu-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    margin-top: 30px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    color: #b1b1b1;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    transition: color 0.2s;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 15px;
+    border-radius: 3px;
+    width: 220px;
+    justify-content: center;
+    position: relative;
+}
+
+.menu-item.selected {
+    color: #c70000;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.menu-item.selected .selector {
+    visibility: visible;
+    opacity: 1;
+    animation: blink 1s infinite;
+}
+
+.selector {
+    font-size: 14px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.menu-text {
+    letter-spacing: 2px;
+    flex: 1;
+    text-align: center;
+}
+
+#highScoreDisplay {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffffff;
+    font-size: 26px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    z-index: 3;
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-align: center;
+    min-width: 250px;
+}
+
+#highScoreValue {
+    color: #d1d1d1;
+}
+
+#tutorialScreen {
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.tutorial-content {
+    max-width: 680px;
+    max-height: 520px;
+    color: #d1d1d1;
+    font-family: 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border: none;
+    border-radius: 0;
+    overflow-y: auto;
+    scroll-behavior: auto;
+}
+
+.tutorial-instruction {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #c70000;
+    font-size: 14px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.tutorial-instruction p {
+    margin: 5px 0;
+}
+
+.tutorial-scroll-hint {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #b1b1b1;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    animation: fadeOut 2s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.tutorial-section {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #333;
+}
+
+.tutorial-section h2 {
+    color: #b1b1b1;
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: none;
+    letter-spacing: 1px;
+}
+
+.powerup-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.powerup-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: none;
+    border: none;
+}
+
+.powerup-visual {
+    width: 48px;
+    height: 24px;
+    position: relative;
+}
+
+.powerup-name {
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+
+.powerup-description {
+    color: #ccc;
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.enemies-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.enemy-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 100px;
+}
+
+.enemy-visual {
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+
+.enemy-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.enemy-name {
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+}
+
+.blocks-display {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.block-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 8px;
+    background: none;
+    border: none;
+}
+
+.block-visual {
+    width: 48px;
+    height: 24px;
+    position: relative;
+}
+
+.block-name {
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+
+.block-description {
+    color: #ccc;
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.controls-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.controls-info p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.key {
+    background: #333;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-family: monospace;
+    font-size: 12px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.tutorial-footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+    color: #fff;
+    font-size: 14px;
+}
+
+#gameOverScreen {
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.screen-content {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 40px;
+    border-radius: 10px;
+    border: 2px solid #ff0;
+    max-width: 500px;
+}
+
+.screen-content h1 {
+    font-size: 48px;
+    margin-bottom: 30px;
+    color: #ff0;
+    text-shadow: 0 0 10px #ff0;
+}
+
+.screen-content button {
+    background: #ff0;
+    color: #000;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+    transition: all 0.3s;
+    width: 200px;
+}
+
+.screen-content button:hover {
+    background: #d1d1d1;
+    transform: scale(1.05);
+}
+
+.final-stats {
+    margin: 25px 0;
+    font-size: 18px;
+}
+
+.final-stats p {
+    margin: 12px 0;
+    color: #fff;
+}
+
+#finalScore {
+    color: #ff0;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+#finalLevel {
+    color: #0ff;
+    font-weight: bold;
+}
+
+.screen-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.debug-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    padding: 5px;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes colorCycle {
+    0% { background-color: #ff0000; }
+    14% { background-color: #00ff00; }
+    28% { background-color: #0000ff; }
+    42% { background-color: #ffff00; }
+    57% { background-color: #ff00ff; }
+    71% { background-color: #00ffff; }
+    85% { background-color: #ff8800; }
+    100% { background-color: #8800ff; }
+}
+
+.color-cycle-block {
+    width: 100%;
+    height: 100%;
+    animation: colorCycle 5s infinite;
+    border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+    #gameContainer {
+        transform: scale(0.8);
+    }
+    
+    .controls-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .enemy-display {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: scale(0.8); }
+    20% { opacity: 1; transform: scale(1); }
+    80% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.1); }
+}
+
+.level-transition-text {
+    animation: fadeInOut 2s ease-in-out forwards;
+    text-shadow: 0 0 10px #ff0, 0 0 20px #ff0;
+    color: #ffffff;
+}
+
+.win-transition-text {
+    text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+    color: #ffffff;
+}
+
+.input-blocked {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.input-blocked::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}

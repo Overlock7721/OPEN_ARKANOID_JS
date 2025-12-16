@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Арканоид</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="720" height="560"></canvas>
+        
+        <!-- Главное меню -->
+        <div id="mainMenu" class="screen">
+            <div class="title-background"></div>
+            <!-- ДОБАВЛЕН High Score Display -->
+            <div id="highScoreDisplay" class="high-score-display">
+                <span id="highScoreValue">000000</span>
+            </div>
+            <div class="menu-content">
+                <div class="menu-item selected" data-action="start">
+                    <span class="selector">▶</span>
+                    <span class="menu-text">START</span>
+                </div>
+                <div class="menu-item" data-action="tutorial">
+                    <span class="selector">▶</span>
+                    <span class="menu-text">TUTORIAL</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран обучения (Туториал) -->
+        <div id="tutorialScreen" class="screen hidden">
+            <div class="tutorial-content">
+                <div class="tutorial-section">
+                    <h2>ПАВЕРАПЫ</h2>
+                    <div class="powerup-grid">
+                        <!-- Powerups будут добавлены через JS -->
+                    </div>
+                </div>
+                
+                <div class="tutorial-section">
+                    <h3>ВРАГИ</h3>
+                    <div class="enemies-row">
+                        <!-- Враги будут добавлены через JS -->
+                    </div>
+                    <p class="enemy-desc">Появляются из люков и атакуют</p>
+                </div>
+                
+                <div class="tutorial-section">
+                    <h2>БЛОКИ</h2>
+                    <div class="blocks-display">
+                        <!-- Блоки будут добавлены через JS -->
+                    </div>
+                </div>
+                
+                <div class="tutorial-section">
+                    <h2>УПРАВЛЕНИЕ</h2>
+                    <div class="controls-info">
+                        <p><span class="key">← →</span> или <span class="key">A D</span> - движение платформы</p>
+                        <p><span class="key">ПРОБЕЛ</span> - запустить мяч / выстрелить лазером</p>
+                        <p><span class="key">P</span> - пауза</p>
+                        <p><span class="key">M</span> - вкл/выкл звук</p>
+                        <p><span class="key">T</span> - debug-режим</p>
+                    </div>
+                </div>
+                
+                <div class="tutorial-footer">
+                    <p>Нажмите ПРОБЕЛ для возврата в меню</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран Game Over -->
+        <div id="gameOverScreen" class="screen hidden">
+            <div class="screen-content">
+            </div>
+        </div>
+    </div>
+
+    <script src="js/sprites.js"></script>
+    <script src="js/levels.js"></script>
+    <script src="js/game-audio.js"></script>
+    <script src="js/game-state.js"></script>
+    <script src="js/game-renderer.js"></script>
+    <script src="js/game-animation.js"></script>
+    <script src="js/game-input.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/transition-manager.js"></script>
+</body>
+</html>
