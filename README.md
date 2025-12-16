@@ -7,7 +7,7 @@
 
 ## Запуск
 
-[GitHub Pages](https://Overlock7721.github.io/OPEN_ARKANOID_JS/)
+[ИГРАТЬ](https://Overlock7721.github.io/OPEN_ARKANOID_JS/)
 
 
 ## Управление
